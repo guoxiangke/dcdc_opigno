@@ -7,6 +7,7 @@ services:
        - db_data:/var/lib/mysql
        - "./sql:/sql:ro"
      restart: always
+     network_mode: "bridge"
      environment:
        MYSQL_ROOT_PASSWORD: drupal
        MYSQL_DATABASE: drupal
@@ -16,19 +17,23 @@ services:
    drupal:
      depends_on:
        - db
-     image: drupal:composer
-     # build: .
-     ports:
-       - "80"
+     build: .
+     links:
+        - db:mysql
      restart: always
+     network_mode: "bridge"
      volumes:
         - ./docker/php/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini:ro
         # change /var/www/html => /var/www/drupal/web
         - ./docker/apache2/000-default.conf:/etc/apache2/sites-enabled/000-default.conf
         - drupal_config:/var/www/drupal/config
         - drupal_files:/var/www/drupal/web/sites/default/files
-        - ./drupal/modules/custom:/var/www/drupal/web/modules/custom
-        - ./drupal/themes/custom:/var/www/drupal/web/themes/custom
+        # - ./drupal/modules/custom:/var/www/drupal/web/modules/custom
+        # - ./drupal/themes/custom:/var/www/drupal/web/themes/custom     
+     environment:
+        - VIRTUAL_HOST=ed.gotosch.com
+        - LETSENCRYPT_HOST=ed.gotosch.com
+        - LETSENCRYPT_EMAIL=dale.tel@139.com
 
 volumes:
     db_data:
