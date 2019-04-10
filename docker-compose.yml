@@ -18,6 +18,9 @@ services:
      depends_on:
        - db
      build: .
+     # ports:
+     #   - "9410:80"
+     # image: guoxiangke/dcdc_opigno
      links:
         - db:mysql
      restart: always
@@ -28,8 +31,8 @@ services:
         - ./docker/apache2/000-default.conf:/etc/apache2/sites-enabled/000-default.conf
         - drupal_config:/var/www/drupal/config
         - drupal_files:/var/www/drupal/web/sites/default/files
-        # - ./drupal/modules/custom:/var/www/drupal/web/modules/custom
-        # - ./drupal/themes/custom:/var/www/drupal/web/themes/custom     
+        - ./drupal/modules/custom:/var/www/drupal/web/modules/custom
+        - ./drupal/themes/custom:/var/www/drupal/web/themes/custom     
      environment:
         - VIRTUAL_HOST=ed.gotosch.com
         - LETSENCRYPT_HOST=ed.gotosch.com
