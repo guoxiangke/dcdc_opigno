@@ -5,7 +5,6 @@ services:
      image: mariadb:latest
      volumes:
        - db_data:/var/lib/mysql
-       - "./sql:/sql:ro"
      restart: always
      network_mode: "bridge"
      environment:
@@ -34,8 +33,8 @@ services:
         - ./drupal/modules/custom:/var/www/drupal/html/modules/custom
         - ./drupal/themes/custom:/var/www/drupal/html/themes/custom     
      environment:
-        - VIRTUAL_HOST=schools.gotosch.com
-        - LETSENCRYPT_HOST=schools.gotosch.com
+        - VIRTUAL_HOST=jobforchina.com
+        - LETSENCRYPT_HOST=jobforchina.com
         - LETSENCRYPT_EMAIL=dale.tel@139.com
 
 volumes:
